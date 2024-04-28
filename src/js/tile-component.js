@@ -5,19 +5,14 @@ populateTileComponent().then(() => {
     if (tileContainers.length > 0) {
         tileContainers[0].focus();
         tileContainers[0].classList.add('active');
+        setTimeout(loadDisneyReferenceBasedObjects, 2500);
 
-        setTimeout(loadOtherFields, 2500);
+        setTimeout((document.getElementById('disney-loader').style.display = 'none'), 5000)
 
-        /*
-        setTimeout(() => {
-            try {
-                tileContainers[0].querySelector('.tile-video').style.display = 'block';
-                tileContainers[0].querySelector('.tile-video').play();
-                try { tileContainers[0].querySelector('.tile-image').style.display = 'none'; } catch (err) { }
-            } catch (err) { }
-        }, "1000"); */
     }
 });
+
+
 let disneyGlobalSet;
 // Function to populate the tile component
 async function populateTileComponent() {
@@ -225,7 +220,7 @@ function closePopup() {
 
 
 
-async function loadOtherFields() {
+async function loadDisneyReferenceBasedObjects() {
     var allTiles = document.querySelectorAll('.tiles-container');
     for (var i = 0; i < allTiles.length; i++) {
         if (allTiles[i].hasAttribute("ref-id")) {
@@ -301,3 +296,4 @@ async function loadOtherFields() {
     }
 
 }
+
