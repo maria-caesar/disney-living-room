@@ -60,20 +60,24 @@ async function populateTileComponent() {
                 try {
                     imgElement = await loadImage(tileData.image.tile["1.78"].series.default.url);
                     imgElement.alt = tileData.text.title.full.series.default.content;
+                    imgElement.title = tileData.text.title.full.series.default.content;
                 } catch (err) {
                     try {
                         imgElement = await loadImage(tileData.image.tile["1.78"].program.default.url);
                         imgElement.alt = tileData.text.title.full.program.default.content;
+                        imgElement.title = tileData.text.title.full.program.default.content;
                     } catch (e) {
                         try {
                             imgElement = await loadImage(tileData.image.tile["1.78"].default.default.url);
                             imgElement.alt = tileData.text.title.full.default.default.content;
+                            imgElement.title = tileData.text.title.full.default.default.content;
                         } catch (ex) {
                             try {
                                 imgElement = await loadImage(tileData.image.tile["1.78"].default.default.url)
                                 imgElement.alt = tileData.text.title.full.collection.default.content;
+                                imgElement.title = tileData.text.title.full.collection.default.content;
                             } catch (er) {
-                                console.log(er);
+                                imgElement = await loadImage("https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png?v=1530129081");
                             }
                         }
                     }
