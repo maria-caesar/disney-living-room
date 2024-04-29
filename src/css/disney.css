@@ -315,6 +315,7 @@ img.tile-image {
     align-items: flex-start;
     display: block;
     width: 100%;
+    mix-blend-mode: screen;
 }
 
 .title-image {
