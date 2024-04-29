@@ -140,7 +140,7 @@ img.tile-image {
     .tile-container {
         display: inline-flex;
         margin-right: 5.25vw;
-        height: 36vw;
+        height: auto;
     }
 
     h3.tile-header {
@@ -173,11 +173,12 @@ img.tile-image {
 
     .tile-container.active {
         border: 1vw solid white;
-        height: 37vw !important;
         transition: 0.2s;
         outline: none !important;
         border-radius: 3vw;
         width: auto !important;
+        transform: scale(1.5);
+        margin-right: 10vw;
     }
 
 
