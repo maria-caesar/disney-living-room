@@ -191,3 +191,100 @@ img.tile-image {
         border-radius: 3vw;
     }
 }
+
+
+
+
+
+
+.modal-popup-bg {
+    background: #00000082;
+    position: fixed;
+    top: 0;
+    height: 100vh;
+    width: 100%;
+}
+
+.modal-popup {
+    position: relative;
+    height: auto;
+    background-color: #21232D;
+    width: 36%;
+    left: 35%;
+    top: 22%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start !important;
+    border-radius: 4%;
+}
+
+
+.cover {
+    width: 100%;
+    display: block;
+    justify-content: flex-start;
+    overflow: hidden;
+    height: auto;
+    align-items: flex-start;
+    position: relative;
+}
+
+.cover-image {
+    justify-content: center;
+    align-items: flex-start;
+    display: block;
+    width: 100%;
+}
+
+.title-image {
+    position: absolute;
+    width: 10vw;
+    top: 2vw;
+    mix-blend-mode: screen;
+    left: 1.5vw;
+}
+
+.disney-details {
+    padding: 1.5vw;
+}
+
+.disney-name {
+    font-size: 1.2vw;
+    font-family: 'Noto Sans';
+    margin-bottom: 0.5vw;
+    color: white;
+}
+
+
+.disney-extras {
+    display: flex;
+    margin-bottom: 1.5vw;
+    color: white;
+    width: 100%;
+}
+
+.disney-extras span {
+    font-size: 0.85vw;
+    font-family: 'Noto Sans';
+    display: inline-flex;
+    margin-right: 0.5vw;
+}
+
+.disney-buttons {
+    display: flex;
+}
+
+button.disney-btn {
+    font-size: 1vw;
+    padding: 1vw;
+    width: 10vw;
+    margin-right: 0.5vw;
+    border: none !important;
+    color: white;
+    background-color: #0472d2;
+    outline: none;
+}
+
+button.disney-btn.my-list {
+    width: auto;
+}

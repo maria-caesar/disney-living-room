@@ -1,18 +1,17 @@
 // Call the function to populate the tile component and set focus afterward
 populateTileComponent().then(() => {
-    setTimeout(hideDisneyLoader, 3000);
+    setTimeout(hideDisneyLoader, 3050);
     // Set focus to the first tile container when the page loads
     const tileContainers = document.querySelectorAll('.tile-container');
     if (tileContainers.length > 0) {
         tileContainers[0].focus();
         tileContainers[0].classList.add('active');
         setTimeout(loadDisneyReferenceBasedObjects, 2500);
-
     }
 });
 
-function hideDisneyLoader(){
-    document.getElementById('disney-loader').style.display = 'none'
+function hideDisneyLoader() {
+    document.getElementById('disney-loader').style.display = 'none';
 }
 
 let disneyGlobalSet;
@@ -215,12 +214,63 @@ document.addEventListener('keydown', function (event) {
 
 // Function to open popup
 function openPopupUp() {
-    alert('open popup');
+    const activeTile = document.activeElement;
+    let popupData;
+    disneyGlobalSet.StandardCollection.containers.every(function (obj) {
+        try {
+            let contentId = activeTile.getAttribute('contentId');
+            popupData = obj.set.items.find(item => item.contentId === contentId);
+        } catch (err) {
+            let collectionId = activeTile.getAttribute('collectionId');
+            try {
+                popupData = obj.set.items.find(item => item.collectionId === collectionId);
+            } catch (ex) { }
+        }
+        if (popupData) return false;
+    }
+    );
+    try {
+        $('#cover-image')[0].src = (popupData.image.hero_collection["1.78"].series.default.url);
+        $('#title-image')[0].src = (popupData.image.title_treatment["1.78"].series.default.url);
+        $('#movie-name')[0].innerText = popupData.text.title.full.series.default.content;
+    } catch (err) {
+        try {
+            $('#cover-image')[0].src = (popupData.image.hero_collection["1.78"].program.default.url);
+            $('#title-image')[0].src = (popupData.image.title_treatment["1.78"].program.default.url);
+            $('#movie-name')[0].innerText = popupData.text.title.full.program.default.content;
+        } catch (e) {
+            try {
+                $('#cover-image')[0].src = (popupData.image.hero_collection["1.78"].default.default.url);
+                $('#title-image')[0].src = (popupData.image.title_treatment["1.78"].default.default.url);
+                $('#movie-name')[0].innerText = popupData.text.title.full.default.default.content;
+            } catch (ex) {
+                try {
+                    $('#cover-image')[0].src = (popupData.image.hero_collection["1.78"].default.default.url)
+                    $('#title-image')[0].src = (popupData.image.title_treatment["1.78"].default.default.url)
+                    $('#movie-name')[0].innerText = popupData.text.title.full.collection.default.content;
+                } catch (er) {
+                    $('#cover-image')[0].src = ("https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png?v=1530129081");
+                }
+            }
+        }
+    }
+    try {
+        $('#movie-rating')[0].innerText = popupData.ratings[0].value;
+        $('#movie-language')[0].innerText = popupData.currentAvailability.region;
+        $('#release-date')[0].innerText = popupData.releases[0].releaseDate;
+        $('#disney-details').show();
+    } catch (ex) { }
+
 }
 
 // Function to close popup
 function closePopup() {
-    alert('close');
+    $('#disney-details').hide();
+    $('#cover-image')[0].src = "";
+    $('#movie-name')[0].innerText = "";
+    $('#movie-rating')[0].innerText = "";
+    $('#movie-language')[0].innerText = "";
+    $('#release-date')[0].innerText = "";
 }
 
 
@@ -243,6 +293,10 @@ async function loadDisneyReferenceBasedObjects() {
                     const titleContainer = document.createElement('div');
                     titleContainer.classList.add('tile-container');
                     titleContainer.setAttribute("data-nav-type", "tile");
+                    if (tileData.contentId)
+                        titleContainer.setAttribute("contentId", tileData.contentId);
+                    else
+                        titleContainer.setAttribute("collectionId", tileData.collectionId);
 
 
                     titleContainer.tabIndex = 0; // Make tile focusable

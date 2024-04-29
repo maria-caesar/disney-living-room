@@ -2,14 +2,14 @@
 <html lang="en">
 
 <head>
-    <title>Disney</title>
+    <title>Disney - Living Room Project</title>
     <meta content="text/html; charset=utf-8" />
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
-    rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="src/css/disney.css">
 
 
@@ -18,7 +18,8 @@
 <body>
     <div id="body-container" class="body-container">
         <div id="disney-loader" class="disney-load">
-            <img alt="disney-plus-100-logo" src="https://whatsondisneyplus.b-cdn.net/wp-content/uploads/2023/06/disney-plus-100-logo.gif">
+            <img alt="disney-plus-100-logo"
+                src="https://whatsondisneyplus.b-cdn.net/wp-content/uploads/2023/06/disney-plus-100-logo.gif">
         </div>
         <!-- Include the component -->
         <div class="tile-component">
@@ -26,9 +27,24 @@
         <!-- Include the JavaScript file -->
         <script src="src/js/tile-component.js" defer></script>
     </div>
-    <div class="modal-popup-bg">
-        <div id="disney-details" class="modal-popup">
-
+    <div id="disney-details" class="modal-popup-bg" style="display: none;">
+        <div class="modal-popup">
+            <div class="cover">
+                <img class="title-image" alt="Disney Title" id="title-image" src="#" />
+                <img class="cover-image" alt="Cover Image" id="cover-image" src="#" />
+            </div>
+            <div class="disney-details">
+                <h3 class="disney-name" id="movie-name"></h3>
+                <div class="disney-extras">
+                    <span id="movie-rating"></span>
+                    <span id="movie-language"></span>
+                    <span id="release-date"></span>
+                </div>
+                <div class="disney-buttons">
+                    <button class="disney-btn watch-now">Watch Now</button>
+                    <button class="disney-btn my-list">+</button>
+                </div>
+            </div>
         </div>
     </div>
 </body>
