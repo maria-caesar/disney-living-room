@@ -34,7 +34,7 @@
                 <img class="cover-image" alt="Cover" id="cover-image" src="#" />
             </div>
             <div class="disney-details">
-                <h3 class="disney-name" id="movie-name"></h3>
+                <h3 class="disney-name" id="movie-name">Disney Name</h3>
                 <div class="disney-extras">
                     <span id="movie-rating"></span>
                     <span id="movie-language"></span>
@@ -44,6 +44,14 @@
                     <button class="disney-btn watch-now">Watch Now</button>
                     <button class="disney-btn my-list">+</button>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div id="disney-no-details" class="modal-popup-bg" style="display: none;">
+        <div class="modal-popup">
+            <div class="disney-details">
+                <h2>No data found</h2>
+                <button class="disney-btn no-data-btn" onclick="$('#disney-no-details').hide();">Ok</button>
             </div>
         </div>
     </div>

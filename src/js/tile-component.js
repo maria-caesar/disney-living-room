@@ -323,7 +323,9 @@ function openPopupUp() {
         $('#movie-language')[0].innerText = popupData.currentAvailability.region;
         $('#release-date')[0].innerText = popupData.releases[0].releaseDate;
         $('#disney-details').show();
-    } catch (ex) { }
+    } catch (ex) {
+        $('#disney-no-details').show();
+     }
 
 }
 
@@ -335,6 +337,8 @@ function closePopup() {
     $('#movie-rating')[0].innerText = "";
     $('#movie-language')[0].innerText = "";
     $('#release-date')[0].innerText = "";
+    $('#disney-no-details').hide();
+
 }
 
 

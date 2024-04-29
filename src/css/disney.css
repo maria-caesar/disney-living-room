@@ -44,6 +44,7 @@ body {
     padding: 0;
     margin: 0;
     -moz-animation: gradient 35s ease infinite;
+    overflow: hidden !important;
 }
 
 .tile-component {
@@ -55,8 +56,8 @@ body {
     justify-content: center;
     display: flex;
     flex-direction: column;
-    margin-bottom: 1.5vw;
-    height: 14vw;
+    margin-bottom: 0.9vw;
+    height: 16vw;
 }
 
 .tiles-box {
@@ -66,6 +67,7 @@ body {
     align-items: center;
     overflow-x: auto;
     height: auto;
+    padding-bottom: 1vw !important;
 }
 
 .tile-container {
@@ -140,7 +142,7 @@ img.tile-image {
     .tile-container {
         display: inline-flex;
         margin-right: 5.25vw;
-        height: 29vw !important;
+        height: 24vh !important;
     }
 
     h3.tile-header {
@@ -178,7 +180,7 @@ img.tile-image {
         border-radius: 3vw;
         width: auto !important;
         margin-right: 10vw;
-        height: 30vw !important;
+        height: 24vh !important;
     }
 
 
@@ -191,6 +193,7 @@ img.tile-image {
 
     img.tile-image {
         border-radius: 3vw;
+        display: flex;
     }
 
 
@@ -297,7 +300,7 @@ img.tile-image {
     display: flex;
     flex-direction: column;
     justify-content: flex-start !important;
-    border-radius: 4%;
+    border-radius: 2%;
 }
 
 
@@ -372,6 +375,25 @@ button.disney-btn.my-list {
     width: auto;
 }
 
+div#disney-no-details .modal-popup {
+    top: 44%;
+}
+
+.disney-details {
+    color: white;
+    font-family: 'Noto Sans';
+}
+
+#disney-no-details .disney-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+button.disney-btn:hover {
+    background-color: #7bce7b;
+}
+
 /*
 .close-popup {
     z-index: 999999;
@@ -381,3 +403,25 @@ button.disney-btn.my-list {
     justify-content: flex-end;
     color: white;
 }*/
+
+
+/* width */
+::-webkit-scrollbar {
+    width: 0.5vw !important;
+    height: 0.5vw !important;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #626262 !important;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #000 !important;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
