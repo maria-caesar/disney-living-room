@@ -14,6 +14,118 @@ function hideDisneyLoader() {
     document.getElementById('disney-loader').style.display = 'none';
 }
 
+async function createImageElement(tileData) {
+    let imgElement = document.createElement('img');
+    imgElement.classList.add("tile-image");
+
+    const sizes = Object.keys(tileData.image.tile);
+    let srcSet = '', imgSizes = '';
+    for (let size of sizes) {
+        if (tileData.image.tile[size]) {
+            const width = tileData.image.tile[size].series?.default?.masterWidth
+                || tileData.image.tile[size].program?.default?.masterWidth
+                || tileData.image.tile[size].default?.default?.masterWidth;
+            const imageUrl = tileData.image.tile[size].series?.default?.url
+                || tileData.image.tile[size].program?.default?.url
+                || tileData.image.tile[size].default?.default?.url;
+            const defaultImageURL = tileData.image.tile["1.78"].series?.default?.url
+                || tileData.image.tile["1.78"].program?.default?.url
+                || tileData.image.tile["1.78"].default?.default?.url;
+            if (defaultImageURL) {
+                imgElement = await loadImage(defaultImageURL);
+                if (imageUrl) {
+                    imgElement.alt = tileData.text.title.full.series?.default?.content
+                        || tileData.text.title.full.program?.default?.url
+                        || tileData.text.title.full.default?.default?.url
+                        || tileData.text.title.full.collection?.default?.content;
+                    imgElement.title = imgElement.alt;
+                    const ImgWidth = Math.round(width * parseFloat(size));
+                    srcSet += `${imageUrl} ${ImgWidth}w, `;
+                    imgSizes += `${width}px, `;
+                }
+            }
+
+        }
+    }
+    // Remove trailing comma and space
+    srcSet = srcSet.slice(0, -2);
+    imgSizes = imgSizes.slice(0, -2);
+    try {
+        imgElement.setAttribute('srcset', srcSet);
+    } catch (err) { }
+    try { imgElement.setAttribute('sizes', imgSizes); } catch (err) { }
+
+    return imgElement;
+}
+
+async function createPictureElement(tileData) {
+    // Create <picture> element
+    const pictureElement = document.createElement('picture');
+
+    // Create <source> elements
+    const sizes = Object.keys(tileData.image.tile);
+    let srcSet = '';
+    for (let size of sizes) {
+        if (tileData.image.tile[size]) {
+            const width = tileData.image.tile[size].series?.default?.masterWidth
+                || tileData.image.tile[size].program?.default?.masterWidth
+                || tileData.image.tile[size].default?.default?.masterWidth;
+            const imageUrl = tileData.image.tile[size].series?.default?.url
+                || tileData.image.tile[size].program?.default?.url
+                || tileData.image.tile[size].default?.default?.url;
+            if (imageUrl) {
+                const sourceElement = document.createElement('source');
+                sourceElement.setAttribute('media', `(min-width: ${width}px)`);
+                sourceElement.setAttribute('srcset', imageUrl);
+                pictureElement.appendChild(sourceElement);
+
+                srcSet += `${imageUrl} ${width}w, `;
+            }
+        }
+    }
+
+    const defaultImageURL = tileData.image.tile["1.78"].series?.default?.url
+        || tileData.image.tile["1.78"].program?.default?.url
+        || tileData.image.tile["1.78"].default?.default?.url;
+
+    // Create <img> element
+    const imgElement = await createImageElement(defaultImageURL);
+    pictureElement.appendChild(imgElement);
+
+    // Remove trailing comma and space
+    srcSet = srcSet.slice(0, -2);
+
+    // Set srcset attribute for <img> element
+    imgElement.setAttribute('srcset', srcSet);
+
+    return pictureElement;
+}
+
+
+
+async function createVideoElement(tileData, titleContainer) {
+    try {
+        if (tileData.videoArt.length > 0) {
+            let videoElement = document.createElement('video');
+            videoElement.classList.add("tile-video");
+            if (tileData.videoArt[0].mediaMetadata.urls.length > 0) {
+                videoElement.src = tileData.videoArt[0].mediaMetadata.urls[0].url;
+                titleContainer.appendChild(videoElement);
+                // Add an event listener to the video
+                videoElement.addEventListener("ended", function () {
+                    // Hide the video element and pause
+                    videoElement.style.display = 'none';
+                    videoElement.nextElementSibling.style.display = 'block';
+                    videoElement.pause();
+                });
+            }
+        }
+    } catch (er) {
+        console.log(er);
+    }
+
+}
+
 let disneyGlobalSet;
 // Function to populate the tile component
 async function populateTileComponent() {
@@ -55,56 +167,11 @@ async function populateTileComponent() {
 
                 titleContainer.tabIndex = 0; // Make tile focusable
 
-                let imgElement = document.createElement('img');
-                imgElement.classList.add("tile-image");
 
-                try {
-                    imgElement = await loadImage(tileData.image.tile["1.78"].series.default.url);
-                    imgElement.alt = tileData.text.title.full.series.default.content;
-                    imgElement.title = tileData.text.title.full.series.default.content;
-                } catch (err) {
-                    try {
-                        imgElement = await loadImage(tileData.image.tile["1.78"].program.default.url);
-                        imgElement.alt = tileData.text.title.full.program.default.content;
-                        imgElement.title = tileData.text.title.full.program.default.content;
-                    } catch (e) {
-                        try {
-                            imgElement = await loadImage(tileData.image.tile["1.78"].default.default.url);
-                            imgElement.alt = tileData.text.title.full.default.default.content;
-                            imgElement.title = tileData.text.title.full.default.default.content;
-                        } catch (ex) {
-                            try {
-                                imgElement = await loadImage(tileData.image.tile["1.78"].default.default.url)
-                                imgElement.alt = tileData.text.title.full.collection.default.content;
-                                imgElement.title = tileData.text.title.full.collection.default.content;
-                            } catch (er) {
-                                imgElement = await loadImage("https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png?v=1530129081");
-                            }
-                        }
-                    }
-                }
+                let imgElement = (await createImageElement(tileData));
 
+                await createVideoElement(tileData, titleContainer);
 
-
-                try {
-                    if (tileData.videoArt.length > 0) {
-                        let videoElement = document.createElement('video');
-                        videoElement.classList.add("tile-video");
-                        if (tileData.videoArt[0].mediaMetadata.urls.length > 0) {
-                            videoElement.src = tileData.videoArt[0].mediaMetadata.urls[0].url;
-                            titleContainer.appendChild(videoElement);
-                            // Add an event listener to the video
-                            videoElement.addEventListener("ended", function () {
-                                // Hide the video element and pause
-                                videoElement.style.display = 'none';
-                                videoElement.nextElementSibling.style.display = 'block';
-                                videoElement.pause();
-                            });
-                        }
-                    }
-                } catch (er) {
-                    console.log(er);
-                }
 
                 titleContainer.appendChild(imgElement);
                 titlesBox.appendChild(titleContainer);
@@ -209,9 +276,6 @@ document.addEventListener('keydown', function (event) {
 });
 
 
-
-
-
 // Function to open popup
 function openPopupUp() {
     const activeTile = document.activeElement;
@@ -301,58 +365,15 @@ async function loadDisneyReferenceBasedObjects() {
 
                     titleContainer.tabIndex = 0; // Make tile focusable
 
-                    let imgElement = document.createElement('img');
-                    imgElement.classList.add("tile-image");
-
-                    try {
-                        imgElement = await loadImage(tileData.image.tile["1.78"].series.default.url);
-                        imgElement.alt = tileData.text.title.full.series.default.content;
-                    } catch (err) {
-                        try {
-                            imgElement = await loadImage(tileData.image.tile["1.78"].program.default.url);
-                            imgElement.alt = tileData.text.title.full.program.default.content;
-                        } catch (e) {
-                            try {
-                                imgElement = await loadImage(tileData.image.tile["1.78"].default.default.url);
-                                imgElement.alt = tileData.text.title.full.default.default.content;
-                            } catch (ex) {
-                                try {
-                                    imgElement = await loadImage(tileData.image.tile["1.78"].default.default.url)
-                                    imgElement.alt = tileData.text.title.full.collection.default.content;
-                                } catch (er) {
-                                    console.log(er);
-                                }
-                            }
-                        }
-                    }
-
-
-
-                    try {
-                        if (tileData.videoArt.length > 0) {
-                            let videoElement = document.createElement('video');
-                            videoElement.classList.add("tile-video");
-                            if (tileData.videoArt[0].mediaMetadata.urls.length > 0) {
-                                videoElement.src = tileData.videoArt[0].mediaMetadata.urls[0].url;
-                                titleContainer.appendChild(videoElement);
-                                // Add an event listener to the video
-                                videoElement.addEventListener("ended", function () {
-                                    // Hide the video element and pause
-                                    //videoElement.style.display = 'none';
-                                    videoElement.pause();
-                                });
-                            }
-                        }
-                    } catch (er) {
-                        console.log(er);
-                    }
+                    let imgElement = (await createImageElement(tileData));
+                    await createVideoElement(tileData, titleContainer);
 
                     titleContainer.appendChild(imgElement);
                     titlesBox.appendChild(titleContainer);
+
                 }));
             } catch (err) { }
         }
     }
 
 }
-

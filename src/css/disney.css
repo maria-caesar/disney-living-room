@@ -140,7 +140,7 @@ img.tile-image {
     .tile-container {
         display: inline-flex;
         margin-right: 5.25vw;
-        height: auto !important;
+        height: 36vw;
     }
 
     h3.tile-header {
