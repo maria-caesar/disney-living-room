@@ -376,7 +376,9 @@ button.disney-btn.my-list {
 }
 
 div#disney-no-details .modal-popup {
-    top: 44%;
+    width: 26%;
+    left: 37%;
+    top: 29%;
 }
 
 .disney-details {
