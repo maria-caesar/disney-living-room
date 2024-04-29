@@ -202,7 +202,7 @@ function loadImage(url) {
 
 // Enable keyboard navigation between tiles
 document.addEventListener('keydown', function (event) {
-
+    closePopup();
     try {
         document.querySelector('.tile-video').pause();
         document.querySelector('.tile-video').style.display = 'none';
@@ -278,6 +278,7 @@ document.addEventListener('keydown', function (event) {
 
 // Function to open popup
 function openPopupUp() {
+    $('#disney-no-details').hide();
     const activeTile = document.activeElement;
     let popupData;
     disneyGlobalSet.StandardCollection.containers.every(function (obj) {
