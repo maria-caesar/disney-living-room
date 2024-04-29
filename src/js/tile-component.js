@@ -95,7 +95,8 @@ async function populateTileComponent() {
                             // Add an event listener to the video
                             videoElement.addEventListener("ended", function () {
                                 // Hide the video element and pause
-                                //videoElement.style.display = 'none';
+                                videoElement.style.display = 'none';
+                                videoElement.nextElementSibling.style.display = 'block';
                                 videoElement.pause();
                             });
                         }

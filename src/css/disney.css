@@ -52,9 +52,11 @@ body {
 }
 
 .tiles-container {
+    justify-content: center;
     display: flex;
     flex-direction: column;
     margin-bottom: 1.5vw;
+    height: 14vw;
 }
 
 .tiles-box {
@@ -63,6 +65,7 @@ body {
     overflow-y: hidden;
     align-items: center;
     overflow-x: auto;
+    height: auto;
 }
 
 .tile-container {
@@ -87,7 +90,7 @@ body {
 
 .tile-container.active {
     border: 0.1vw solid white;
-    height: 12vw;
+    height: 10.5vw;
     /* Animation */
     transition: 0.2s;
     outline: none !important;
@@ -104,6 +107,7 @@ h3.tile-header {
 
 .tile-video {
     display: none;
+    border-radius: 0.8vw;
 }
 
 .disney-load {
@@ -130,12 +134,13 @@ img.tile-image {
         display: flex;
         flex-direction: column;
         margin-bottom: 10.5vw;
+        height: auto;
     }
 
     .tile-container {
         display: inline-flex;
         margin-right: 5.25vw;
-        height: 41vw !important;
+        height: 51vw !important;
     }
 
     h3.tile-header {
