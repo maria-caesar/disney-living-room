@@ -197,15 +197,13 @@ document.addEventListener('keydown', function (event) {
         nextTile.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
         nextTile.classList.add('active');
 
-        setTimeout(() => {
+        try {
+            nextTile.querySelector('.tile-video').style.display = 'block';
+            nextTile.querySelector('.tile-video').play();
             try {
-                nextTile.querySelector('.tile-video').style.display = 'block';
-                nextTile.querySelector('.tile-video').play();
-                try {
-                    nextTile.querySelector('.tile-image').style.display = 'none';
-                } catch (err) { }
+                nextTile.querySelector('.tile-image').style.display = 'none';
             } catch (err) { }
-        }, "1000");
+        } catch (err) { }
     }
 });
 

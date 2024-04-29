@@ -174,7 +174,6 @@ img.tile-image {
     .tile-container.active {
         border: 1vw solid white;
         height: 48vw !important;
-        /* Animation */
         transition: 0.2s;
         outline: none !important;
         border-radius: 3vw;
