@@ -10,18 +10,20 @@ populateTileComponent().then(() => {
     }
 });
 
+//Hide Disney Loader after the Tile Component is loaded - Maria Caesar - 04/29/2024
 function hideDisneyLoader() {
     document.getElementById('disney-loader').style.display = 'none';
 }
 
+//Image Element for the Tiles - Maria Caesar - 04/29/2024
 async function createImageElement(tileData) {
     let imgElement = document.createElement('img');
     imgElement.classList.add("tile-image");
 
     const sizes = Object.keys(tileData.image.tile);
     let srcSet = '', imgSizes = '';
-    for (let size of sizes) {
-        if (tileData.image.tile[size]) {
+    for (let size of sizes) { //Size listed for SrcSet
+        if (tileData.image.tile[size]) { //Tile Based On Size, if available
             const width = tileData.image.tile[size].series?.default?.masterWidth
                 || tileData.image.tile[size].program?.default?.masterWidth
                 || tileData.image.tile[size].default?.default?.masterWidth;
@@ -32,7 +34,7 @@ async function createImageElement(tileData) {
                 || tileData.image.tile["1.78"].program?.default?.url
                 || tileData.image.tile["1.78"].default?.default?.url;
             if (defaultImageURL) {
-                imgElement = await loadImage(defaultImageURL);
+                imgElement = await loadImage(defaultImageURL); //Check image is available
                 if (imageUrl) {
                     imgElement.alt = tileData.text.title.full.series?.default?.content
                         || tileData.text.title.full.program?.default?.url
@@ -58,51 +60,7 @@ async function createImageElement(tileData) {
     return imgElement;
 }
 
-async function createPictureElement(tileData) {
-    // Create <picture> element
-    const pictureElement = document.createElement('picture');
-
-    // Create <source> elements
-    const sizes = Object.keys(tileData.image.tile);
-    let srcSet = '';
-    for (let size of sizes) {
-        if (tileData.image.tile[size]) {
-            const width = tileData.image.tile[size].series?.default?.masterWidth
-                || tileData.image.tile[size].program?.default?.masterWidth
-                || tileData.image.tile[size].default?.default?.masterWidth;
-            const imageUrl = tileData.image.tile[size].series?.default?.url
-                || tileData.image.tile[size].program?.default?.url
-                || tileData.image.tile[size].default?.default?.url;
-            if (imageUrl) {
-                const sourceElement = document.createElement('source');
-                sourceElement.setAttribute('media', `(min-width: ${width}px)`);
-                sourceElement.setAttribute('srcset', imageUrl);
-                pictureElement.appendChild(sourceElement);
-
-                srcSet += `${imageUrl} ${width}w, `;
-            }
-        }
-    }
-
-    const defaultImageURL = tileData.image.tile["1.78"].series?.default?.url
-        || tileData.image.tile["1.78"].program?.default?.url
-        || tileData.image.tile["1.78"].default?.default?.url;
-
-    // Create <img> element
-    const imgElement = await createImageElement(defaultImageURL);
-    pictureElement.appendChild(imgElement);
-
-    // Remove trailing comma and space
-    srcSet = srcSet.slice(0, -2);
-
-    // Set srcset attribute for <img> element
-    imgElement.setAttribute('srcset', srcSet);
-
-    return pictureElement;
-}
-
-
-
+//Video Autoplay Element in Tiles, if available.
 async function createVideoElement(tileData, titleContainer) {
     try {
         if (tileData.videoArt.length > 0) {
@@ -126,7 +84,8 @@ async function createVideoElement(tileData, titleContainer) {
 
 }
 
-let disneyGlobalSet;
+let disneyGlobalSet; //To Use for Popup
+
 // Function to populate the tile component
 async function populateTileComponent() {
     // Fetch data from API or use provided data
@@ -141,14 +100,14 @@ async function populateTileComponent() {
         titlesContainer.classList.add('tiles-container');
         titlesContainer.setAttribute("data-nav-type", "list");
         if (obj.set.refId)
-            titlesContainer.setAttribute("ref-id", obj.set.refId);
+            titlesContainer.setAttribute("ref-id", obj.set.refId); //Adding Reference Id to container if available
 
-        const headingEle = document.createElement("h3");
+        const headingEle = document.createElement("h3"); // Each Category available
         headingEle.classList.add("tile-header");
-        headingEle.textContent = obj.set.text.title.full.set.default.content;
+        headingEle.textContent = obj.set.text.title.full.set.default.content; 
 
         const titlesBox = document.createElement('div');
-        titlesBox.classList.add('tiles-box');
+        titlesBox.classList.add('tiles-box'); // Each Categorys Box available
 
         titlesContainer.appendChild(headingEle);
         titlesContainer.appendChild(titlesBox);
@@ -168,9 +127,9 @@ async function populateTileComponent() {
                 titleContainer.tabIndex = 0; // Make tile focusable
 
 
-                let imgElement = (await createImageElement(tileData));
+                let imgElement = (await createImageElement(tileData)); //Call to Image Element
 
-                await createVideoElement(tileData, titleContainer);
+                await createVideoElement(tileData, titleContainer); //Call to Video Element
 
 
                 titleContainer.appendChild(imgElement);
@@ -263,7 +222,7 @@ document.addEventListener('keydown', function (event) {
         nextTile.focus(); // Move focus to the next tile
         // Scroll into view if necessary
         nextTile.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
-        nextTile.classList.add('active');
+        nextTile.classList.add('active'); //Set Active Class for the zoom.
 
         try {
             nextTile.querySelector('.tile-video').style.display = 'block';
@@ -343,7 +302,7 @@ function closePopup() {
 }
 
 
-
+//Ref ID based load. 
 async function loadDisneyReferenceBasedObjects() {
     var allTiles = document.querySelectorAll('.tiles-container');
     for (var i = 0; i < allTiles.length; i++) {
