@@ -72,15 +72,15 @@ body {
     display: inline-flex;
     margin-right: 1.5vw;
     height: 10vw;
-    box-shadow: rgb(0 0 0 / 84%) 0px 0.25vw 0.5vw 0px;
     border-radius: 0.8vw;
-    clip-path: view-box;
+    box-shadow: rgb(0 0 0 / 84%) 0px 0.25vw 0.5vw 0px;
 }
 
 .body-container {
     padding: 2.5vw;
     width: 96vw;
-    background: linear-gradient(178deg, #002336, #00777b);
+    /* background: linear-gradient(178deg, #002336, #00777b); */
+    background-color: #21232D;
     background-size: 100% 100%;
     -webkit-animation: gradient 35s ease infinite;
     -moz-animation: gradient 35s ease infinite;
