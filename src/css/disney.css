@@ -140,7 +140,7 @@ img.tile-image {
     .tile-container {
         display: inline-flex;
         margin-right: 5.25vw;
-        height: 51vw !important;
+        height: auto !important;
     }
 
     h3.tile-header {
@@ -173,10 +173,11 @@ img.tile-image {
 
     .tile-container.active {
         border: 1vw solid white;
-        height: 48vw !important;
+        height: 37vw !important;
         transition: 0.2s;
         outline: none !important;
         border-radius: 3vw;
+        width: auto !important;
     }
 
 
@@ -189,6 +190,86 @@ img.tile-image {
 
     img.tile-image {
         border-radius: 3vw;
+    }
+
+
+
+    .modal-popup-bg {
+        height: 100% !important;
+    }
+
+    .modal-popup {
+        background-color: #21232D;
+        width: 61% !important;
+        left: 19% !important;
+        top: 34% !important;
+    }
+
+
+    .cover {
+        width: 100%;
+        display: block;
+        justify-content: flex-start;
+        overflow: hidden;
+        height: auto;
+        align-items: flex-start;
+        position: relative;
+    }
+
+    .cover-image {
+        justify-content: center;
+        align-items: flex-start;
+        display: block;
+        width: 100%;
+    }
+
+    .title-image {
+        width: 19vw !important;
+    }
+
+    .disney-details {
+        padding: 5.5vw !important;
+    }
+
+    .disney-name {
+        font-size: 5.2vw !important;
+        font-family: 'Noto Sans';
+        margin-bottom: 0.5vw;
+        color: white;
+    }
+
+
+    .disney-extras {
+        display: flex;
+        margin-bottom: 7.5vw !important;
+        color: white;
+        width: 100%;
+    }
+
+    .disney-extras span {
+        font-size: 2.85vw !important;
+        font-family: 'Noto Sans';
+        display: inline-flex;
+        margin-right: 2.5vw !important;
+    }
+
+    .disney-buttons {
+        display: flex;
+    }
+
+    button.disney-btn {
+        font-size: 3vw !important;
+        padding: 3vw !important;
+        width: 24vw !important;
+        margin-right: 1.5vw !important;
+        border: none !important;
+        color: white;
+        background-color: #0472d2;
+        outline: none;
+    }
+
+    button.disney-btn.my-list {
+        width: auto !important;
     }
 }
 
@@ -288,3 +369,13 @@ button.disney-btn {
 button.disney-btn.my-list {
     width: auto;
 }
+
+/*
+.close-popup {
+    z-index: 999999;
+    font-size: 1.85vw;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    color: white;
+}*/
