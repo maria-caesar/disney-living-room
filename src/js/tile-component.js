@@ -1,5 +1,6 @@
 // Call the function to populate the tile component and set focus afterward
 populateTileComponent().then(() => {
+    setTimeout(hideDisneyLoader, 3000);
     // Set focus to the first tile container when the page loads
     const tileContainers = document.querySelectorAll('.tile-container');
     if (tileContainers.length > 0) {
@@ -7,11 +8,12 @@ populateTileComponent().then(() => {
         tileContainers[0].classList.add('active');
         setTimeout(loadDisneyReferenceBasedObjects, 2500);
 
-        setTimeout((document.getElementById('disney-loader').style.display = 'none'), 5000)
-
     }
 });
 
+function hideDisneyLoader(){
+    document.getElementById('disney-loader').style.display = 'none'
+}
 
 let disneyGlobalSet;
 // Function to populate the tile component
